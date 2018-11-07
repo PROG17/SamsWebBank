@@ -14,7 +14,7 @@ namespace SamsWebBank.Controllers
 
         public IActionResult Index()
         {
-            var customers = _bankRepository.GetAllCustomers();
+            var customers = _bankRepository.Customers;
 
             return View(customers);
         }
