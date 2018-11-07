@@ -5,6 +5,14 @@ VisualStudioVersion = 15.0.28010.2048
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SamsWebBank", "SamsWebBank\SamsWebBank.csproj", "{43A82579-2F4C-414B-B7B6-FE8A38B8D865}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bank.Tests", "Bank.Tests\Bank.Tests.csproj", "{1652A7AC-C81A-4BEA-8C82-83E092ECE2CB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DD2E0932-E5E8-473A-8F93-01B1D5C9E431}"
+	ProjectSection(SolutionItems) = preProject
+		.gitattributes = .gitattributes
+		.gitignore = .gitignore
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,10 @@ Global
 		{43A82579-2F4C-414B-B7B6-FE8A38B8D865}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43A82579-2F4C-414B-B7B6-FE8A38B8D865}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{43A82579-2F4C-414B-B7B6-FE8A38B8D865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1652A7AC-C81A-4BEA-8C82-83E092ECE2CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1652A7AC-C81A-4BEA-8C82-83E092ECE2CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1652A7AC-C81A-4BEA-8C82-83E092ECE2CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1652A7AC-C81A-4BEA-8C82-83E092ECE2CB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
