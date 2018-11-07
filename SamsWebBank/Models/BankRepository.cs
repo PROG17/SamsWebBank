@@ -46,7 +46,20 @@ namespace SamsWebBank.Models
 
             _accounts[accountNumber].Salary -= amount;
 
-            return "";
+            return "success";
+        }
+
+        public string Deposit(int accountNumber, decimal amount)
+        {
+            if (!_accounts.ContainsKey(accountNumber))
+                return "Kontonumret finns inte.";
+
+            if (amount < 0)
+                return "Beloppet kan inte vara negativt";
+
+            _accounts[accountNumber].Salary += amount;
+
+            return "success";
         }
 
 
