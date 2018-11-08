@@ -5,16 +5,39 @@ using System.Threading.Tasks;
 
 namespace SamsWebBank.Models
 {
+  
     public class BankRepository
     {
+        private static BankRepository instance = null;
+        private static readonly object padlock = new object();
 
         private Dictionary<int, Account> _accounts;
         private List<Customer> _customers;
 
-        public BankRepository()
+        private BankRepository()
         {
             _accounts = CreateAllAcounts();
             _customers = CreateAllCustomers();
+        }
+
+        public static void Reset()
+        {
+            instance = null;
+        }
+
+        public static BankRepository Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new BankRepository();
+                    }
+                    return instance;
+                }
+            }
         }
 
         public Dictionary<int, Account> Accounts

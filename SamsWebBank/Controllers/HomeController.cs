@@ -10,7 +10,7 @@ namespace SamsWebBank.Controllers
 {
     public class HomeController : Controller
     {
-        BankRepository _bankRepository = new BankRepository();
+        BankRepository _bankRepository = BankRepository.Instance;
 
         public IActionResult Index()
         {

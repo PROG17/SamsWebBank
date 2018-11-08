@@ -3,15 +3,22 @@ using SamsWebBank.Models;
 
 namespace Bank.Tests
 {
+   
     public class BankRepositoryTests
     {
+        private BankRepository GetBankRepository()
+        {
+            BankRepository.Reset(); 
+            return BankRepository.Instance;
+        }
+
         [Theory]
         [InlineData(1, 100, 9900)]
         [InlineData(5, 10000, 90000)]
         [InlineData(6, 12000, 0)]
         public void Withdraw_WithValidArguments_UpdatesAccountWithCorrectSalary(int accountNumber, decimal amount, decimal expectedSalary)
         {
-            var bankRepository = new BankRepository();
+            var bankRepository = GetBankRepository();
 
             var resultStatus = bankRepository.Withdraw(accountNumber, amount);
 
@@ -25,7 +32,7 @@ namespace Bank.Tests
         [InlineData(6, 12000, 24000)]
         public void Deposit_WithValidArguments_UpdatesAccountWithCorrectSalary(int accountNumber, decimal amount, decimal expectedSalary)
         {
-            var bankRepository = new BankRepository();
+            var bankRepository = GetBankRepository();
 
             var resultStatus = bankRepository.Deposit(accountNumber, amount);
 
@@ -41,7 +48,7 @@ namespace Bank.Tests
         [InlineData(1, 10001, "Det finns inte tillräckligt med pengar på kontot.")]
         public void Withdraw_WithInvalidArguments_ReturnsErrorMessage(int accountNumber, decimal amount, string expectedErrorMessage)
         {
-            var bankRepository = new BankRepository();
+            var bankRepository = GetBankRepository();
 
             var resultStatus = bankRepository.Withdraw(accountNumber, amount);
 
