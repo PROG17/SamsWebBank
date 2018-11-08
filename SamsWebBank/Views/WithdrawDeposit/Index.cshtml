@@ -1,0 +1,66 @@
+﻿@model WithdrawDepositVM
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="row">
+    <div class="col-sm-6">
+        <h2>Withdraw or deposit money</h2>
+
+
+        <div asp-validation-summary="All" class="text-danger"></div>
+
+        <form id="withdrawDepositForm"
+              data-ajax="true"
+              data-ajax-method="POST"
+              data-ajax-mode="replace"
+              data-ajax-update="#result"
+              asp-action="WithdrawDeposit">
+
+
+            <div class="form-group">
+                <label asp-for="Account"></label>
+                <input asp-for="Account" class="form-control" />
+                <span asp-validation-for="Account"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Amount"></label>
+                <input asp-for="Amount" class="form-control" />
+                <span asp-validation-for="Amount"></span>
+            </div>
+
+            <div class="btn-group" data-toggle="buttons">
+                <label onclick="submitForm(this);" class="btn btn-primary active">
+                    <input autocomplete="off" class="btn btn-primary" type="radio" name="transactionType" value="withdrawal">Withdraw
+                </label>
+                <label onclick="submitForm(this);" class="btn btn-primary">
+                    <input autocomplete="off" class="btn btn-primary" onclick="submitForm(this);" type="radio" name="transactionType" value="deposit">Deposit
+                </label>
+            </div>
+
+            <button style="visibility:hidden" id="submitBtn" type="submit"></button>
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12">
+        <div id="result"></div>
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+
+        function submitForm(target) {
+
+            console.log(target);
+            var submitBtn = document.getElementById("submitBtn");
+            setTimeout(function () {
+                submitBtn.click();
+            }, 50);
+        }
+    </script>
+}
+
+

@@ -5,8 +5,87 @@ using System.Threading.Tasks;
 
 namespace SamsWebBank.Models
 {
+  
     public class BankRepository
     {
+        private static BankRepository instance = null;
+        private static readonly object padlock = new object();
+
+        private Dictionary<int, Account> _accounts;
+        private List<Customer> _customers;
+
+        private BankRepository()
+        {
+            _accounts = CreateAllAcounts();
+            _customers = CreateAllCustomers();
+        }
+
+        public static void Reset()
+        {
+            instance = null;
+        }
+
+        public static BankRepository Instance
+        {
+            get
+            {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new BankRepository();
+                    }
+                    return instance;
+                }
+            }
+        }
+
+        public Dictionary<int, Account> Accounts
+        {
+            get
+            {
+                return _accounts;
+            }  
+        }
+
+        public List<Customer> Customers
+        {
+            get
+            {
+                return _customers;
+            }
+        }
+
+        public string Withdraw(int accountNumber, decimal amount)
+        {
+            if (!_accounts.ContainsKey(accountNumber))
+                return "Kontonumret finns inte.";
+
+            if (amount < 0)
+                return "Beloppet kan inte vara negativt";
+
+            if (amount > _accounts[accountNumber].Salary)
+                return "Det finns inte tillräckligt med pengar på kontot.";
+
+            _accounts[accountNumber].Salary -= amount;
+
+            return "success";
+        }
+
+        public string Deposit(int accountNumber, decimal amount)
+        {
+            if (!_accounts.ContainsKey(accountNumber))
+                return "Kontonumret finns inte.";
+
+            if (amount < 0)
+                return "Beloppet kan inte vara negativt";
+
+            _accounts[accountNumber].Salary += amount;
+
+            return "success";
+        }
+
+
         private Dictionary<int, Account> CreateAllAcounts()
         {
             return new Dictionary<int, Account>()
@@ -20,10 +99,9 @@ namespace SamsWebBank.Models
             };
         }
 
-        public List<Customer> GetAllCustomers()
+        private List<Customer> CreateAllCustomers()
         {
-            var accounts = CreateAllAcounts();
-
+          
             return new List<Customer>
             {
 
@@ -34,8 +112,8 @@ namespace SamsWebBank.Models
                     LastName="Bering",
                    Accounts=new Dictionary<int, Account>()
                    {
-                       {1, accounts[1] },
-                       {2, accounts[2] },
+                       {1, _accounts[1] },
+                       {2, _accounts[2] },
                    }
 
                 },
@@ -46,8 +124,8 @@ namespace SamsWebBank.Models
                     LastName="Henriksson",
                     Accounts=new Dictionary<int, Account>()
                    {
-                       {3, accounts[3] },
-                       {4, accounts[4] },
+                       {3, _accounts[3] },
+                       {4, _accounts[4] },
                    }
 
                 },
@@ -58,7 +136,7 @@ namespace SamsWebBank.Models
                     LastName="Karlsson",
                     Accounts=new Dictionary<int, Account>()
                    {
-                       {5, accounts[5] },
+                       {5, _accounts[5] },
                    }
 
                 },
@@ -69,7 +147,7 @@ namespace SamsWebBank.Models
                     LastName="Näslund",
                     Accounts=new Dictionary<int, Account>()
                    {
-                       {6, accounts[6] },
+                       {6, _accounts[6] },
                    }
 
                 }
