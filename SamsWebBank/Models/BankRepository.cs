@@ -85,6 +85,26 @@ namespace SamsWebBank.Models
             return "success";
         }
 
+        public string Transfer(int fromAccount,int toAccount, decimal amount)
+        {
+            if (!_accounts.ContainsKey(fromAccount))
+                return "Avsändarens kontonummer finns inte.";
+            if (!_accounts.ContainsKey(toAccount))
+                return "Mottagarens kontonummer finns inte.";
+            if (fromAccount == toAccount)
+                return "Du kan måste ange två unika konton";
+
+            var senderStatus = _accounts[fromAccount].Transfer(amount, "sender");
+            if(senderStatus != "success")
+                return senderStatus;
+
+            var retrieverStatus = _accounts[toAccount].Transfer(amount, "reciever");
+            if (retrieverStatus != "success")
+                return retrieverStatus;
+
+            return "success";
+        }
+
 
         private Dictionary<int, Account> CreateAllAcounts()
         {

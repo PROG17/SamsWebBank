@@ -56,6 +56,40 @@ namespace Bank.Tests
         }
 
 
+        [Theory]
+        [InlineData(1,2, 11000, "Det finns inte tillräckligt med pengar på kontot.")]
+        [InlineData(2,1, 21000, "Det finns inte tillräckligt med pengar på kontot.")]
+        [InlineData(1, 1222, 199, "Mottagarens kontonummer finns inte.")]
+        [InlineData(1222, 1, 2000, "Avsändarens kontonummer finns inte.")]
+        [InlineData(1, 1, 2000, "Du kan måste ange två unika konton")]
+        public void Transfer_WithInvalidArguments_ReturnsErrorMessage(int fromAccount, int toAccount, decimal amount, string expectedErrorMessage)
+        {
+            var bankRepository = GetBankRepository();
+
+            var resultStatus = bankRepository.Transfer(fromAccount, toAccount, amount);
+
+            Assert.Equal(expectedErrorMessage, resultStatus);
+        }
+
+        [Theory]
+        [InlineData(1, 2, 100, "success")]
+        [InlineData(2, 1, 200, "success")]
+        [InlineData(1, 3, 199, "success")]
+        [InlineData(4, 6, 2000, "success")]
+        public void Transfer_WithValidArguments(int fromAccount, int toAccount, decimal amount, string expectedMessage)
+        {
+            var bankRepository = GetBankRepository();
+
+            var previousBalanceSender = bankRepository.Accounts[fromAccount].Salary;
+            var previousBalanceRetriever = bankRepository.Accounts[toAccount].Salary;
+
+            var resultStatus = bankRepository.Transfer(fromAccount, toAccount, amount);
+            Assert.True(bankRepository.Accounts[fromAccount].Salary + amount == previousBalanceSender);
+            Assert.True(bankRepository.Accounts[toAccount].Salary - amount == previousBalanceRetriever);
+            Assert.Equal(resultStatus, expectedMessage);
+        }
+
+
 
 
     }
