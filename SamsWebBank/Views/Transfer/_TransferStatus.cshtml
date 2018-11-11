@@ -1,0 +1,11 @@
+﻿@model List<Account>
+
+<h4>Kontostatus</h4>
+
+@foreach (var account in Model)
+{
+<p>
+    Kontonummer: <strong>@account.AccountNumber</strong> Saldo: <strong>@account.Salary.ToString("C")</strong>
+</p>
+}
+
